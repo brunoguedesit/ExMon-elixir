@@ -2,6 +2,7 @@ defmodule ExMon do
   alias ExMon.{Game, Player}
   alias ExMon.Game.Status
   alias ExMon.Game.Actions
+  alias Mix.Shell.IO, as: Shell
 
   @computer_name  "Robotnik"
   def create_player(name, move_avg, move_rnd, move_heal) do
@@ -13,7 +14,9 @@ defmodule ExMon do
     |> create_player(:punch, :kick, :heal)
     |> Game.start(player)
 
+    Shell.cmd("clear")
     Status.print_round_message(Game.info())
+
   end
 
   def make_move(move) do
@@ -25,7 +28,7 @@ defmodule ExMon do
   defp do_move({:error, move}), do: Status.print_wrong_move_message(move)
   defp do_move({:ok, move}) do
     case move do
-      :move_heal -> "Realiza cura"
+      :move_heal -> Actions.heal()
       move -> Actions.attack(move)
     end
 
