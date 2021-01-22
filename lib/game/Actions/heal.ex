@@ -28,6 +28,5 @@ defmodule ExMon.Game.Actions.Heal do
     |> Game.update()
 
     Status.print_move_message(player, :heal, life)
-
   end
 end
